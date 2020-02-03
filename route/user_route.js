@@ -1,83 +1,45 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../config/db_conn');
-const UserInfo = require('../model/user_model');
-const Sequelize = require('sequelize');
-const Op = Sequelize.Op;
+const user = require('../model/user_model');
+const Sequelize = require('sequelize')
 
-// Get gig list
+// Get list of all users
+//there is some kind of issue related to where users is being called in the data
+//base and the route
 router.get('/', (req, res) => 
-  Gig.findAll()
-    .then(gigs => res.render('gigs', {
-        gigs
+user.findAll()
+    .then(users => res.render('dashboard', {
+        users
       }))
     .catch(err => console.log(err)));
 
-// Display add gig form
+// Display add add form
 router.get('/add', (req, res) => res.render('add'));
 
 // Add a gig
 router.post('/add', (req, res) => {
-  let { title, technologies, budget, description, contact_email } = req.body;
+  let { username, email} = req.body;
   let errors = [];
 
   // Validate Fields
-  if(!title) {
-    errors.push({ text: 'Please add a title' });
+  if(!username) {
+    errors.push({ text: 'Please add a name' });
   }
-  if(!technologies) {
-    errors.push({ text: 'Please add some technologies' });
+  if(!email) {
+    errors.push({ text: 'Please your email address' });
   }
-  if(!description) {
-    errors.push({ text: 'Please add a description' });
-  }
-  if(!contact_email) {
-    errors.push({ text: 'Please add a contact email' });
-  }
-
-  // Check for errors
-  if(errors.length > 0) {
-    res.render('add', {
-      errors,
-      title, 
-      technologies, 
-      budget, 
-      description, 
-      contact_email
-    });
-  } else {
-    if(!budget) {
-      budget = 'Unknown';
-    } else {
-      budget = `$${budget}`;
-    }
-
-    // Make lowercase and remove space after comma
-    technologies = technologies.toLowerCase().replace(/, /g, ',');
-
+  
+  
     // Insert into table
-    Gig.create({
-      title,
-      technologies,
-      description,
-      budget,
-      contact_email
+    user.create({
+      username,
+      email
     })
-      .then(gig => res.redirect('/gigs'))
+      .then(users => res.redirect('/dashboard/add'))
       .catch(err => console.log(err));
   }
 });
 
-// Search for gigs
-router.get('/search', (req, res) => {
-  let { term } = req.query;
-
-  // Make lowercase
-  term = term.toLowerCase();
-
-  Gig.findAll({ where: { technologies: { [Op.like]: '%' + term + '%' } } })
-    .then(gigs => res.render('gigs', { gigs }))
-    .catch(err => console.log(err));
-});
 
 module.exports = router;

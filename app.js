@@ -31,22 +31,20 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // Set static folder
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use('/users', require('./route/user_route'))
+
 
 
 
 //home page route and view
-app.get('/',( req, res) => {
-  console.log('hello world')
-  res.render('welcome')
-
-});
-
-//get user workout log
-app.get('/log', (req, res) => {
+// Index route
+app.get('/', (req, res) => res.render('index'));
 
 
+//  routes
+app.use('/dashboard', require('./route/user_route'));
 
-});
+
 
 
 

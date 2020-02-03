@@ -1,0 +1,23 @@
+<section id="search" class="search-wrap">
+    <h1>A simple email sign up form</h1>
+
+
+    <form action="/dashboard/add" method="POST" class="search-form">
+      <i class="fas fa-search"></i>
+
+
+      <input type="search" name="term" placeholder="Name" id = "username"value="{{username}}">
+
+      <input type="search" name="term" placeholder="Email" id ="email" value = {{email}}>
+      <input type="submit" value="Add User">
+
+    </form>
+
+    {{#each error}}
+
+      {{text}}
+
+    {{/each}}
+
+    
+  </section>

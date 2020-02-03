@@ -1,13 +1,13 @@
 const Sequelize = require('sequelize');
 const db = require('../config/db_conn');
 
-const user = db.define('user', {
-  title: {
+const user = db.define('workoutdata', {
+  username: {
     type: Sequelize.STRING
   },
-  contact_email: {
+  email: {
     type: Sequelize.STRING
   }
-})
+});
 
-module.exports = UserInfo;
+module.exports = user;
