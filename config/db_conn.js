@@ -4,7 +4,7 @@ const Sequelize = require('sequelize');
     //sequelize arguements database name/ owner/password
     //tablename == workoutdata in pgadmin 4 in the workoutlogdata database
 
-module.exports =  new Sequelize('workoutlogdata', 'postgres', 'ruha423M', {
+module.exports =  new Sequelize('workoutlogdata', 'postgres', 'ENTERPASWORD HERE', {
   host: 'localhost',
   dialect: 'postgres',
   operatorsAliases: false,
