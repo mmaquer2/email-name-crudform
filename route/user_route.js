@@ -9,7 +9,8 @@ const Sequelize = require('sequelize')
 //base and the route
 router.get('/', (req, res) => 
 user.findAll()
-    .then(users => res.render('dashboard', {
+    .then(users => res.render('dashboard',  {
+        
         users
       }))
     .catch(err => console.log(err)));
@@ -38,8 +39,8 @@ router.post('/add', (req, res) => {
     })
       .then(users => res.redirect('/dashboard/add'))
       .catch(err => console.log(err));
-  }
-});
+  });
+
 
 
 module.exports = router;
